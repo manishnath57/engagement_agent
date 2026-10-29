@@ -87,6 +87,11 @@ if frames.empty:
 
 attendance = build_attendance(frames, duration, dt, min_presence_s=float(min_presence))
 valid = [int(p[1:]) for p in attendance[attendance.status == "Present"].participant]
+if not valid:
+    st.warning(f"No participant stayed visible for {min_presence}s, so nothing could be counted. "
+               "Lower 'Min. presence' in the sidebar, or use a longer video with clearly visible, front-facing faces.")
+    st.dataframe(attendance.drop(columns=["first_seen_s", "last_seen_s"]), hide_index=True, width="stretch")
+    st.stop()
 timeline = build_timeline(frames, audio, duration, window_s, weights, valid)
 students = build_students(frames, duration, dt, window_s, valid)
 suggestions = generate_suggestions(timeline, attendance, students, duration, audio, window_s)
