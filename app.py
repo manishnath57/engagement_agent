@@ -105,7 +105,7 @@ with t1:
     st.write("Attendance is marked only after **sustained presence**, not single-frame detection. Edit names to match your roster.")
     shown = attendance.drop(columns=["first_seen_s", "last_seen_s"])
     attendance_edit = st.data_editor(
-        shown, hide_index=True, use_container_width=True,
+        shown, hide_index=True, width="stretch"
         disabled=[c for c in shown.columns if c != "name"],
         column_config={"present_pct": st.column_config.ProgressColumn("present %", min_value=0, max_value=100, format="%.0f"),
                        "attentive_pct": st.column_config.ProgressColumn("attentive %", min_value=0, max_value=100, format="%.0f")})
